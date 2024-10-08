@@ -20,12 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.pacmobile.R
 import com.example.pacmobile.ui.theme.AppTheme
-import com.example.pacmobile.ui.util.convertPxToDp
 
 @Composable
-fun SelectionRoleScreen(modifier: Modifier = Modifier) {
+fun SelectionRoleScreen(navController: NavController, modifier: Modifier = Modifier) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.background_image),
@@ -41,7 +41,7 @@ fun SelectionRoleScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = convertPxToDp(36)),
+                .padding(16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -60,10 +60,9 @@ fun SelectionRoleScreen(modifier: Modifier = Modifier) {
                 color = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .size(309.dp, 93.dp)
-                ,
+                    .size(309.dp, 93.dp),
                 style = MaterialTheme.typography.labelLarge,
-                fontSize =26.sp,
+                fontSize = 26.sp,
                 minLines = 3,
                 textAlign = TextAlign.Left
             )
@@ -71,7 +70,7 @@ fun SelectionRoleScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { /* TODO: Navegar para a próxima tela */ },
+                onClick = { /* TODO: Navegar para a tela de cliente */ },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.background),
                 modifier = Modifier
                     .size(width = 280.dp, height = 53.dp),
@@ -84,7 +83,11 @@ fun SelectionRoleScreen(modifier: Modifier = Modifier) {
 
             // Botão "Sou um Nutricionista"
             Button(
-                onClick = { /* TODO: Navegar para a próxima tela */ },
+                onClick = {
+                    navController.navigate("login-nutri") {
+                        popUpTo("selection-role") { inclusive = true }
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                 modifier = Modifier
                     .size(width = 280.dp, height = 53.dp),
@@ -108,6 +111,6 @@ fun SelectionRoleScreen(modifier: Modifier = Modifier) {
 @Composable
 fun PreviewScreen() {
     AppTheme(dynamicColor = false) {
-        SelectionRoleScreen()
+        SelectionRoleScreen(navController = androidx.navigation.compose.rememberNavController())
     }
 }
