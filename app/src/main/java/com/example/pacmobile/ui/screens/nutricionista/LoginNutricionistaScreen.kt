@@ -1,11 +1,11 @@
-package com.example.pacmobile.ui.screens
+package com.example.pacmobile.ui.screens.nutricionista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -13,22 +13,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.pacmobile.R
+import com.example.pacmobile.ui.components.CustomButton
+import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
-
 @Composable
-fun LoginNutricionistaStateHandler(){
+fun LoginNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
@@ -37,12 +35,26 @@ fun LoginNutricionistaStateHandler(){
         onEmailChange = { emailState.value = it },
         password = passwordState.value,
         onPasswordChange = { passwordState.value = it },
-        onLoginClick = { /* Handle login click */ },
-        onForgotPasswordClick = { /* Handle forgot password click */ },
-        onSignUpClick = { /* Handle sign-up click */ }
+        onLoginClick = {
+            // Ação ao clicar em "Entrar" (navegar para a próxima tela)
+            navController.navigate("home") {
+                popUpTo("login-nutri") { inclusive = true }
+            }
+        },
+        onForgotPasswordClick = {
+            // Navegar para a tela de recuperação de senha
+            navController.navigate("forgot-password-nutricionista") {
+                popUpTo("login-nutri") { inclusive = true }
+            }
+        },
+        onSignUpClick = {
+            // Navegar para a tela de registro
+            navController.navigate("sign-up-nutricionista") {
+                popUpTo("login-nutri") { inclusive = true }
+            }
+        }
     )
 }
-
 
 @Composable
 fun LoginNutricionista(
@@ -86,66 +98,36 @@ fun LoginNutricionista(
         )
 
         // Campo de E-mail
-        BasicTextField(
+        CustomTextField(
+            label = "E-mail",
             value = email,
-            onValueChange = onEmailChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            singleLine = true,
-            textStyle = TextStyle(fontSize = 16.sp),
-            decorationBox = { innerTextField ->
-                Column() {
-                    Text(text = "E-mail", style = TextStyle(color = MaterialTheme.colorScheme.onSecondary))
-                    Box(modifier = Modifier.padding(vertical = 16.dp)) {
-                        innerTextField()
-                    }
-                }
-            }
+            onValueChange = onEmailChange
         )
 
         // Campo de Senha
-        BasicTextField(
+        CustomTextField(
+            label = "Senha",
             value = password,
             onValueChange = onPasswordChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp),
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            textStyle = TextStyle(fontSize = 16.sp),
-            decorationBox = { innerTextField ->
-                Column {
-                    Text(text = "Senha", style = TextStyle(color = MaterialTheme.colorScheme.onSecondary))
-                    Box(modifier = Modifier.padding(vertical = 8.dp)) {
-                        innerTextField()
-                    }
-                }
-            }
+            isPassword = true
         )
 
         // Botão "Entrar"
-        Button(
+        CustomButton(
+            text = "Entrar",
             onClick = onLoginClick,
-            colors = ButtonDefaults.buttonColors(containerColor =  MaterialTheme.colorScheme.primary),
-            modifier = Modifier
-                .padding(bottom = 64.dp)
-                .size(220.dp, 48.dp)
-        ) {
-            Text(text = "Entrar", color = MaterialTheme.colorScheme.onPrimary)
-        }
+        )
 
-        // Texto "Esqueci minha senha" e "Não tenho conta"
+        // Texto "Esqueci minha senha"
         TextButton(
             onClick = onForgotPasswordClick,
             modifier = Modifier
                 .fillMaxWidth()
-
         ) {
             Text(text = "Esqueci minha senha >", color = MaterialTheme.colorScheme.primary)
         }
 
+        // Texto "Não tenho conta"
         TextButton(
             onClick = onSignUpClick,
             modifier = Modifier.fillMaxWidth()
@@ -158,18 +140,7 @@ fun LoginNutricionista(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewLogin() {
-    val emailState = remember { mutableStateOf("") }
-    val passwordState = remember { mutableStateOf("") }
-
     AppTheme(dynamicColor = false, darkTheme = false) {
-        LoginNutricionista(
-            email = emailState.value,
-            onEmailChange = { emailState.value = it },
-            password = passwordState.value,
-            onPasswordChange = { passwordState.value = it },
-            onLoginClick = { /* Handle login click */ },
-            onForgotPasswordClick = { /* Handle forgot password click */ },
-            onSignUpClick = { /* Handle sign-up click */ }
-        )
+        LoginNutricionistaStateHandler()
     }
 }

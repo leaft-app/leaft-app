@@ -69,8 +69,11 @@ fun SelectionRoleScreen(navController: NavController, modifier: Modifier = Modif
 
             Spacer(modifier = Modifier.weight(1f))
 
+            // Botão "Sou um Cliente"
             Button(
-                onClick = { /* TODO: Navegar para a tela de cliente */ },
+                    onClick = { navController.navigate("login-cliente") {
+                        popUpTo("selection-role") { inclusive = true }
+                        }     },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.background),
                 modifier = Modifier
                     .size(width = 280.dp, height = 53.dp),
@@ -84,7 +87,7 @@ fun SelectionRoleScreen(navController: NavController, modifier: Modifier = Modif
             // Botão "Sou um Nutricionista"
             Button(
                 onClick = {
-                    navController.navigate("login-nutri") {
+                    navController.navigate("login-nutricionista") {
                         popUpTo("selection-role") { inclusive = true }
                     }
                 },
@@ -98,9 +101,6 @@ fun SelectionRoleScreen(navController: NavController, modifier: Modifier = Modif
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            TextButton(onClick = { /* TODO: Navegar para a criação de conta */ }) {
-                Text(text = "Ainda não tenho uma conta", color = Color.White)
-            }
 
             Spacer(modifier = Modifier.weight(1f))
         }
