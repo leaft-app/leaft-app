@@ -46,6 +46,11 @@ fun MyApp() {
         composable("codigo-recuperação-nutricionista") { CodigoRecuperacaoStateHandler(navController = navController) }
         composable("nova-senha-nutricionista") { NovaSenhaStateHandler(navController = navController) }
 
+        //Cliente
+        composable("sign-up-camera-cliente") { /*TODO*/ }
+        composable("sign-up-camera-cliente") { /*TODO*/ }
+
+
 
         //Cliente
         composable("login-cliente") { /*TODO*/ }

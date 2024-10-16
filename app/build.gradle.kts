@@ -70,4 +70,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.navigation.compose.v273)
+
+    // Adicionando CameraX
+    implementation(libs.androidx.camera.camera2) // CameraX Camera2
+    implementation(libs.androidx.camera.lifecycle) // Lifecycle support for CameraX
+    implementation(libs.androidx.camera.view) // CameraX View for PreviewView
+
+    // Adicionando ML Kit para leitura de QR Code
+    implementation(libs.google.mlkit.barcode.scanning) // ML Kit Barcode Scanning
+
 }
