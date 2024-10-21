@@ -39,7 +39,7 @@ fun MyApp() {
         composable("selection-role") { SelectionRoleScreen(navController = navController) }
 
         //Nutricionista
-        composable("home") { /*TODO*/ }
+        composable("home-nutricionista") { /*TODO*/ }
         composable("login-nutricionista") { LoginNutricionistaStateHandler(navController = navController) }
         composable("forgot-password-nutricionista") { ForgotPasswordStateHandler(navController = navController) }
         composable("sign-up-nutricionista") { SignUpNutricionistaStateHandler(navController = navController) }
@@ -47,7 +47,7 @@ fun MyApp() {
         composable("nova-senha-nutricionista") { NovaSenhaStateHandler(navController = navController) }
 
         //Cliente
-        composable("sign-up-camera-cliente") { /*TODO*/ }
+        composable("sign-up-camera-cliente") { ForgotPasswordStateHandler(navController = navController) }
         composable("sign-up-camera-cliente") { /*TODO*/ }
 
 
