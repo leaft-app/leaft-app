@@ -73,7 +73,8 @@ fun SelectionRoleScreen(navController: NavController, modifier: Modifier = Modif
             Button(
                     onClick = { navController.navigate("login-cliente") {
                         popUpTo("selection-role") { inclusive = true }
-                        }     },
+                        }
+                              },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.background),
                 modifier = Modifier
                     .size(width = 280.dp, height = 53.dp),

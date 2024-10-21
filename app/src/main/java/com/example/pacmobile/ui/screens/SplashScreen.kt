@@ -44,7 +44,7 @@ fun SplashScreen( modifier: Modifier = Modifier, navController: NavHostControlle
     LaunchedEffect(Unit) {
         delay(2000)
         navController.navigate("selection-role") {
-            popUpTo("splash") { inclusive = true }
+            popUpTo("splash-screen") { inclusive = true }
         }
     }
 }

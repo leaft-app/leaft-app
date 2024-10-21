@@ -30,26 +30,25 @@ import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
 @Composable
-fun NovaSenhaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
-    val senhaState = remember { mutableStateOf("") }
+fun ForgotPasswordStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+    val emailState = remember { mutableStateOf("") }
 
-    NovaSenha(
-        senha = senhaState.value,
-        onSenhaChange = { senhaState.value = it },
-        onEnviarClick = {
-            // Navegação para a próxima tela
-            navController.navigate("login-nutricionista") {
-                popUpTo("nova-senha") { inclusive = true }
+    ForgotPassword(
+        email = emailState.value,
+        onEmailChange = { emailState.value = it },
+        onLoginClick = {
+            navController.navigate("codigo-recuperacao-nutricionista") {
+                popUpTo("forgot-password-nutricionista") { inclusive = true }
             }
         },
     )
 }
 
 @Composable
-fun NovaSenha(
-    senha: String,
-    onSenhaChange: (String) -> Unit,
-    onEnviarClick: () -> Unit,
+fun ForgotPassword(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -66,7 +65,7 @@ fun NovaSenha(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.icon), // Mantenha o ícone
+            painter = painterResource(id = R.drawable.icon),
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -74,44 +73,43 @@ fun NovaSenha(
                 .size(177.dp, 198.dp)
         )
 
-        // Título "Insira sua nova senha"
+        // Texto "Esqueceu sua senha?"
         Text(
-            text = "Nova Senha",
+            text = "Esqueceu sua senha?",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 32.dp),
+            modifier = Modifier.padding(bottom = 102.dp),
             fontSize = 24.sp
         )
 
-        // Texto "Insira sua senha"
+        //Texto "Digite seu e-mail cadastrado"
         Text(
-            text = "Insira sua senha",
+            text = "Digite seu e-mail cadastrado",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .align(Alignment.Start),
             fontSize = 16.sp,
-        )
+            )
 
-        // Campo de Senha
+        // Campo de E-mail
         CustomTextField(
-            label = "Senha",
-            value = senha,
-            onValueChange = onSenhaChange,
-            isPassword = true
+            label = "E-mail",
+            value = email,
+            onValueChange = onEmailChange
         )
 
-        // Botão "Enviar"
+        // Botão "Entrar"
         CustomButton(
-            text = "Enviar",
-            onClick = onEnviarClick,
+            text = "Entrar",
+            onClick = onLoginClick,
         )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewNovaSenha() {
+fun PreviewForgotPassword() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        NovaSenhaStateHandler()
+        ForgotPasswordStateHandler()
     }
 }

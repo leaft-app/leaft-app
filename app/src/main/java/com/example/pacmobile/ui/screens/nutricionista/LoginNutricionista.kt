@@ -2,14 +2,10 @@ package com.example.pacmobile.ui.screens.nutricionista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,25 +26,45 @@ import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
 @Composable
-fun ForgotPasswordStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun LoginNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val emailState = remember { mutableStateOf("") }
+    val passwordState = remember { mutableStateOf("") }
 
-    ForgotPassword(
+    LoginNutricionista(
         email = emailState.value,
         onEmailChange = { emailState.value = it },
+        password = passwordState.value,
+        onPasswordChange = { passwordState.value = it },
         onLoginClick = {
-            navController.navigate("codigo-recuperação-nutricionista") {
-                popUpTo("forgot-password") { inclusive = true }
+            // Ação ao clicar em "Entrar" (navegar para a próxima tela)
+            navController.navigate("home-nutricionista") {
+                popUpTo("login-nutricionista") { inclusive = true }
             }
         },
+        onForgotPasswordClick = {
+            // Navegar para a tela de recuperação de senha
+            navController.navigate("forgot-password-nutricionista") {
+                popUpTo("login-nutricionista") { inclusive = true }
+            }
+        },
+        onSignUpClick = {
+            // Navegar para a tela de registro
+            navController.navigate("sign-up-nutricionista") {
+                popUpTo("login-nutricionista") { inclusive = true }
+            }
+        }
     )
 }
 
 @Composable
-fun ForgotPassword(
+fun LoginNutricionista(
     email: String,
     onEmailChange: (String) -> Unit,
+    password: String,
+    onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
+    onForgotPasswordClick: () -> Unit,
+    onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -73,23 +89,13 @@ fun ForgotPassword(
                 .size(177.dp, 198.dp)
         )
 
-        // Texto "Esqueceu sua senha?"
+        // Texto "Faça seu login"
         Text(
-            text = "Esqueceu sua senha?",
+            text = "Faça seu login",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(bottom = 102.dp),
             fontSize = 24.sp
         )
-
-        //Texto "Digite seu e-mail cadastrado"
-        Text(
-            text = "Digite seu e-mail cadastrado",
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .align(Alignment.Start),
-            fontSize = 16.sp,
-            )
 
         // Campo de E-mail
         CustomTextField(
@@ -98,18 +104,43 @@ fun ForgotPassword(
             onValueChange = onEmailChange
         )
 
+        // Campo de Senha
+        CustomTextField(
+            label = "Senha",
+            value = password,
+            onValueChange = onPasswordChange,
+            isPassword = true
+        )
+
         // Botão "Entrar"
         CustomButton(
             text = "Entrar",
             onClick = onLoginClick,
         )
+
+        // Texto "Esqueci minha senha"
+        TextButton(
+            onClick = onForgotPasswordClick,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(text = "Esqueci minha senha >", color = MaterialTheme.colorScheme.primary)
+        }
+
+        // Texto "Não tenho conta"
+        TextButton(
+            onClick = onSignUpClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Não tenho conta >", color = MaterialTheme.colorScheme.primary)
+        }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewForgotPassword() {
+fun PreviewLogin() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        ForgotPasswordStateHandler()
+        LoginNutricionistaStateHandler()
     }
 }

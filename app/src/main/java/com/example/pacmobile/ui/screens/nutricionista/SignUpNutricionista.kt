@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,44 +25,35 @@ import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
 @Composable
-fun LoginNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun SignUpNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+    val nameState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
-    LoginNutricionista(
+    SignUpNutricionista(
+        name = nameState.value,
+        onNameChange = { nameState.value = it },
         email = emailState.value,
         onEmailChange = { emailState.value = it },
         password = passwordState.value,
         onPasswordChange = { passwordState.value = it },
-        onLoginClick = {
-            // Ação ao clicar em "Entrar" (navegar para a próxima tela)
-            navController.navigate("home") {
-                popUpTo("login-nutri") { inclusive = true }
-            }
-        },
-        onForgotPasswordClick = {
-            // Navegar para a tela de recuperação de senha
-            navController.navigate("forgot-password-nutricionista") {
-                popUpTo("login-nutri") { inclusive = true }
-            }
-        },
         onSignUpClick = {
-            // Navegar para a tela de registro
-            navController.navigate("sign-up-nutricionista") {
-                popUpTo("login-nutri") { inclusive = true }
+            // Ação ao clicar em "Cadastrar" (navegar para a próxima tela)
+            navController.navigate("login-nutricionista") {
+                popUpTo("sign-up-nutricionista") { inclusive = true }
             }
         }
     )
 }
 
 @Composable
-fun LoginNutricionista(
+fun SignUpNutricionista(
+    name: String,
+    onNameChange: (String) -> Unit,
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -89,12 +79,19 @@ fun LoginNutricionista(
                 .size(177.dp, 198.dp)
         )
 
-        // Texto "Faça seu login"
+        // Texto "Faça seu Cadastro"
         Text(
-            text = "Faça seu login",
+            text = "Faça seu Cadastro",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 102.dp),
-            fontSize = 24.sp
+            modifier = Modifier.padding(bottom = 24.dp),
+            fontSize = 26.sp
+        )
+
+        // Campo de Nome
+        CustomTextField(
+            label = "Nome",
+            value = name,
+            onValueChange = onNameChange
         )
 
         // Campo de E-mail
@@ -112,35 +109,23 @@ fun LoginNutricionista(
             isPassword = true
         )
 
-        // Botão "Entrar"
-        CustomButton(
-            text = "Entrar",
-            onClick = onLoginClick,
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Texto "Esqueci minha senha"
-        TextButton(
-            onClick = onForgotPasswordClick,
+        // Botão "Cadastrar"
+        CustomButton(
+            text = "Cadastrar",
+            onClick = onSignUpClick,
             modifier = Modifier
                 .fillMaxWidth()
-        ) {
-            Text(text = "Esqueci minha senha >", color = MaterialTheme.colorScheme.primary)
-        }
-
-        // Texto "Não tenho conta"
-        TextButton(
-            onClick = onSignUpClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Não tenho conta >", color = MaterialTheme.colorScheme.primary)
-        }
+                .height(48.dp)
+        )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewLogin() {
+fun PreviewSignUp() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        LoginNutricionistaStateHandler()
+        SignUpNutricionistaStateHandler()
     }
 }

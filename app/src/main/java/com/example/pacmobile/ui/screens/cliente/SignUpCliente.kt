@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens.nutricionista
+package com.example.pacmobile.ui.screens.cliente
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,12 +25,15 @@ import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
 @Composable
-fun SignUpNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun SignUpClienteStateHandler(
+    navController: NavController = androidx.navigation.compose.rememberNavController(),
+    nutricionistaId: String = ""
+) {
     val nameState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
-    SignUpNutricionista(
+    SignUpCliente(
         name = nameState.value,
         onNameChange = { nameState.value = it },
         email = emailState.value,
@@ -38,16 +41,21 @@ fun SignUpNutricionistaStateHandler(navController: NavController = androidx.navi
         password = passwordState.value,
         onPasswordChange = { passwordState.value = it },
         onSignUpClick = {
-            // Ação ao clicar em "Cadastrar" (navegar para a próxima tela)
-            navController.navigate("home") {
-                popUpTo("sign-up-nutricionista") { inclusive = true }
+            // Aqui você faz a chamada para o backend passando o clienteNome, clienteSenha e o nutricionistaId
+            // Exemplo:
+            // api.cadastrarCliente(nome = clienteNome, senha = clienteSenha, nutricionistaId = nutricionistaId)
+
+
+            
+            navController.navigate("home-cliente") {
+                popUpTo("sign-up-cliente") { inclusive = true }
             }
         }
     )
 }
 
 @Composable
-fun SignUpNutricionista(
+fun SignUpCliente(
     name: String,
     onNameChange: (String) -> Unit,
     email: String,
@@ -126,6 +134,6 @@ fun SignUpNutricionista(
 @Composable
 fun PreviewSignUp() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        SignUpNutricionistaStateHandler()
+        SignUpClienteStateHandler()
     }
 }

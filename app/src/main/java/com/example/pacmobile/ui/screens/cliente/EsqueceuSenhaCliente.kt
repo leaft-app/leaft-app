@@ -2,10 +2,14 @@ package com.example.pacmobile.ui.screens.cliente
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,42 +30,25 @@ import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
 @Composable
-fun LoginClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun EsqueceuSenhaClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val emailState = remember { mutableStateOf("") }
-    val passwordState = remember { mutableStateOf("") }
 
-    LoginCliente(
+    EsqueceuSenhaCliente(
         email = emailState.value,
         onEmailChange = { emailState.value = it },
-        password = passwordState.value,
-        onPasswordChange = { passwordState.value = it },
         onLoginClick = {
-            navController.navigate("home-cliente") {
-                popUpTo("login-cliente") { inclusive = true }
+            navController.navigate("codigo-recuperação-cliente") {
+                popUpTo("forgot-password-cliente") { inclusive = true }
             }
         },
-        onForgotPasswordClick = {
-            navController.navigate("forgot-password-cliente") {
-                popUpTo("login-cliente") { inclusive = true }
-            }
-        },
-        onSignUpClick = {
-            navController.navigate("sign-up-camera-cliente") {
-                popUpTo("login-cliente") { inclusive = true }
-            }
-        }
     )
 }
 
 @Composable
-fun LoginCliente(
+fun EsqueceuSenhaCliente(
     email: String,
     onEmailChange: (String) -> Unit,
-    password: String,
-    onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit,
-    onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -86,12 +73,22 @@ fun LoginCliente(
                 .size(177.dp, 198.dp)
         )
 
-        // Texto "Faça seu login"
+        // Texto "Esqueceu sua senha?"
         Text(
-            text = "Faça seu login",
+            text = "Esqueceu sua senha?",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(bottom = 102.dp),
             fontSize = 24.sp
+        )
+
+        //Texto "Digite seu e-mail cadastrado"
+        Text(
+            text = "Digite seu e-mail cadastrado",
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .align(Alignment.Start),
+            fontSize = 16.sp,
         )
 
         // Campo de E-mail
@@ -101,43 +98,18 @@ fun LoginCliente(
             onValueChange = onEmailChange
         )
 
-        // Campo de Senha
-        CustomTextField(
-            label = "Senha",
-            value = password,
-            onValueChange = onPasswordChange,
-            isPassword = true
-        )
-
         // Botão "Entrar"
         CustomButton(
             text = "Entrar",
             onClick = onLoginClick,
         )
-
-        // Texto "Esqueci minha senha"
-        TextButton(
-            onClick = onForgotPasswordClick,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(text = "Esqueci minha senha >", color = MaterialTheme.colorScheme.primary)
-        }
-
-        // Texto "Não tenho conta"
-        TextButton(
-            onClick = onSignUpClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Não tenho conta >", color = MaterialTheme.colorScheme.primary)
-        }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewLogin() {
+fun PreviewEsqueceuSenhaCliente() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        LoginClienteStateHandler()
+        EsqueceuSenhaClienteStateHandler()
     }
 }

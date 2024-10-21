@@ -14,6 +14,12 @@ import com.example.pacmobile.ui.screens.nutricionista.ForgotPasswordStateHandler
 import com.example.pacmobile.ui.screens.nutricionista.LoginNutricionistaStateHandler
 import com.example.pacmobile.ui.screens.SelectionRoleScreen
 import com.example.pacmobile.ui.screens.SplashScreen
+import com.example.pacmobile.ui.screens.cliente.CodigoRecuperacaoClienteStateHandler
+import com.example.pacmobile.ui.screens.cliente.EsqueceuSenhaClienteStateHandler
+import com.example.pacmobile.ui.screens.cliente.LoginClienteStateHandler
+import com.example.pacmobile.ui.screens.cliente.NovaSenhaClienteStateHandler
+import com.example.pacmobile.ui.screens.cliente.SignUpClienteCameraStateHandler
+import com.example.pacmobile.ui.screens.cliente.SignUpClienteStateHandler
 import com.example.pacmobile.ui.screens.nutricionista.NovaSenhaStateHandler
 import com.example.pacmobile.ui.screens.nutricionista.SignUpNutricionistaStateHandler
 import com.example.pacmobile.ui.theme.AppTheme
@@ -43,17 +49,25 @@ fun MyApp() {
         composable("login-nutricionista") { LoginNutricionistaStateHandler(navController = navController) }
         composable("forgot-password-nutricionista") { ForgotPasswordStateHandler(navController = navController) }
         composable("sign-up-nutricionista") { SignUpNutricionistaStateHandler(navController = navController) }
-        composable("codigo-recuperação-nutricionista") { CodigoRecuperacaoStateHandler(navController = navController) }
+        composable("codigo-recuperacao-nutricionista") { CodigoRecuperacaoStateHandler(navController = navController) }
         composable("nova-senha-nutricionista") { NovaSenhaStateHandler(navController = navController) }
 
         //Cliente
-        composable("sign-up-camera-cliente") { ForgotPasswordStateHandler(navController = navController) }
-        composable("sign-up-camera-cliente") { /*TODO*/ }
+        composable("home-cliente") { /*TODO*/ }
+        composable("login-cliente") { LoginClienteStateHandler(navController = navController) }
+        composable("forgot-password-cliente") { EsqueceuSenhaClienteStateHandler(navController = navController) }
+        composable("sign-up-camera-cliente") { SignUpClienteCameraStateHandler(navController = navController) }
+        composable("sign-up-cliente/{nutricionistaId}") { backStackEntry ->
+            SignUpClienteStateHandler(
+                navController = navController,
+                nutricionistaId = backStackEntry.arguments?.getString("nutricionistaId") ?: ""
+            )
+        }
+        composable("codigo-recuperação-cliente") { CodigoRecuperacaoClienteStateHandler(navController = navController) }
+        composable("nova-senha-cliente") { NovaSenhaClienteStateHandler(navController = navController) }
 
 
 
-        //Cliente
-        composable("login-cliente") { /*TODO*/ }
     }
 }
 

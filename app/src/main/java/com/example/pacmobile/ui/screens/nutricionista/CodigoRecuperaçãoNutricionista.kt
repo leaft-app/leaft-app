@@ -42,7 +42,7 @@ fun CodigoRecuperacaoStateHandler(navController: NavController = androidx.naviga
         onCodigoChange = { codigoState.value = it },
         onEnviarClick = {
             navController.navigate("nova-senha-nutricionista") {
-                popUpTo("codigo-recuperacao") { inclusive = true }
+                popUpTo("codigo-recuperacao-nutricionista") { inclusive = true }
             }
         },
     )

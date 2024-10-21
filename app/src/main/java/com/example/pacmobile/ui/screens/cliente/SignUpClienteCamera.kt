@@ -42,20 +42,20 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
 @Composable
-fun ForgotPasswordStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun SignUpClienteCameraStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val emailState = remember { mutableStateOf("") }
     val showCameraPreview = remember { mutableStateOf(false) }
 
     if (showCameraPreview.value) {
+        // Chama a função de pré-visualização da câmera
         CameraPreview { qrCodeValue ->
-            // Lógica após escanear o QR code
-            // Por exemplo, você pode navegar para uma nova tela ou lidar com o valor QR code
-            navController.navigate("codigo-recuperação-nutricionista") {
-                popUpTo("forgot-password") { inclusive = true }
+            // Quando o QR Code é escaneado, navega para a tela de cadastro com o ID do nutricionista
+            navController.navigate("sign-up-cliente/$qrCodeValue") {
+                popUpTo("sign-up-camera-cliente") { inclusive = true }
             }
         }
     } else {
-        ForgotPassword(
+        SignUpClienteCamera(
             email = emailState.value,
             onEmailChange = { emailState.value = it },
             onLoginClick = {
@@ -65,8 +65,9 @@ fun ForgotPasswordStateHandler(navController: NavController = androidx.navigatio
     }
 }
 
+
 @Composable
-fun ForgotPassword(
+fun SignUpClienteCamera(
     email: String,
     onEmailChange: (String) -> Unit,
     onLoginClick: () -> Unit,
@@ -201,6 +202,6 @@ fun CameraPreview(
 @Composable
 fun PreviewForgotPassword() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        ForgotPasswordStateHandler()
+        SignUpClienteCameraStateHandler()
     }
 }
