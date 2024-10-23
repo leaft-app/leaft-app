@@ -2,6 +2,7 @@ package com.example.pacmobile.ui.screens.cliente
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,17 +14,10 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -72,20 +66,17 @@ fun SignUpClienteCameraStateHandler(navController: NavController = androidx.navi
         SignUpClienteCamera(
             onLoginClick = {
                 // Verificar se a permissão já foi concedida
-                when (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)) {
-                    PackageManager.PERMISSION_GRANTED -> {
-                        showCameraPreview.value = true // Se a permissão já estiver concedida
-                    }
-                    else -> {
-                        // Solicitar permissão se ainda não concedida
-                        cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-                    }
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    showCameraPreview.value = true // Exibir pré-visualização da câmera se a permissão já foi concedida
+                } else {
+                    // Solicitar permissão se ainda não concedida
+                    cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                    Log.d("CameraPermission", "Solicitando permissão de câmera")
                 }
             },
         )
     }
 }
-
 
 @Composable
 fun SignUpClienteCamera(
@@ -149,21 +140,6 @@ fun SignUpClienteCamera(
     }
 }
 
-
-
-
-
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewCamera() {
-    AppTheme(dynamicColor = false, darkTheme = false) {
-        SignUpClienteCameraStateHandler()
-    }
-}
-
-
 @OptIn(ExperimentalGetImage::class)
 @Composable
 fun CameraPreview(
@@ -202,7 +178,9 @@ fun CameraPreview(
                                 .addOnSuccessListener { barcodes ->
                                     for (barcode in barcodes) {
                                         barcode.rawValue?.let { qrCodeValue ->
-                                            onQRCodeScanned(qrCodeValue)
+                                            // Certifique-se de que qrCodeValue seja o nutricionistaId
+                                            Log.d("QRCodeValue", "QR Code lido: $qrCodeValue")
+                                            onQRCodeScanned(qrCodeValue) // Passa o valor do QR Code para a lógica da tela de cadastro
                                         }
                                     }
                                 }
@@ -211,6 +189,7 @@ fun CameraPreview(
                                 }
                         }
                     }
+
 
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -223,7 +202,7 @@ fun CameraPreview(
                             imageAnalysis
                         )
                     } catch (exc: Exception) {
-                        exc.printStackTrace()
+                        Log.e("CameraPreview", "Error binding camera use cases", exc)
                     }
                 }, cameraExecutor)
 
@@ -236,25 +215,21 @@ fun CameraPreview(
     }
 }
 
-
-
 @Composable
 fun DrawSquare() {
     val squareSize = 200.dp // Tamanho do quadrado
 
-    // Quadrado desenhado na tela
     Box(
         modifier = Modifier
-            .fillMaxSize() // Preenche toda a tela
-            .background(MaterialTheme.colorScheme.background), // Cor de fundo (opcional)
-        contentAlignment = Alignment.Center // Centraliza o conteúdo (quadrado) dentro do Box
-    ) {
-        Box(
-            modifier = Modifier
-                .size(squareSize) // Define o tamanho do quadrado
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)) // Cor do quadrado com transparência
-        )
-    }
+            .size(squareSize)
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+    )
 }
 
-
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewCamera() {
+    AppTheme(dynamicColor = false, darkTheme = false) {
+        SignUpClienteCameraStateHandler()
+    }
+}
