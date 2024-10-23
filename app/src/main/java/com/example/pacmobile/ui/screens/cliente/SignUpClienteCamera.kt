@@ -1,5 +1,10 @@
 package com.example.pacmobile.ui.screens.cliente
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
@@ -43,23 +48,39 @@ import com.google.mlkit.vision.common.InputImage
 
 @Composable
 fun SignUpClienteCameraStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
-    val emailState = remember { mutableStateOf("") }
     val showCameraPreview = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    // Lançador para solicitar permissão de câmera
+    val cameraPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            showCameraPreview.value = true // Exibir a pré-visualização da câmera se a permissão for concedida
+        } else {
+            Toast.makeText(context, "Permissão de câmera é necessária.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     if (showCameraPreview.value) {
-        // Chama a função de pré-visualização da câmera
         CameraPreview { qrCodeValue ->
-            // Quando o QR Code é escaneado, navega para a tela de cadastro com o ID do nutricionista
             navController.navigate("sign-up-cliente/$qrCodeValue") {
                 popUpTo("sign-up-camera-cliente") { inclusive = true }
             }
         }
     } else {
         SignUpClienteCamera(
-            email = emailState.value,
-            onEmailChange = { emailState.value = it },
             onLoginClick = {
-                showCameraPreview.value = true // Ativa a visualização da câmera ao clicar no botão
+                // Verificar se a permissão já foi concedida
+                when (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)) {
+                    PackageManager.PERMISSION_GRANTED -> {
+                        showCameraPreview.value = true // Se a permissão já estiver concedida
+                    }
+                    else -> {
+                        // Solicitar permissão se ainda não concedida
+                        cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                    }
+                }
             },
         )
     }
@@ -68,8 +89,6 @@ fun SignUpClienteCameraStateHandler(navController: NavController = androidx.navi
 
 @Composable
 fun SignUpClienteCamera(
-    email: String,
-    onEmailChange: (String) -> Unit,
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -120,7 +139,7 @@ fun SignUpClienteCamera(
 
             CustomButton(
                 text = "Abrir Câmera",
-                onClick = { onLoginClick() }, // Atualiza para chamar a função de clique
+                onClick = { onLoginClick() },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .size(220.dp, 48.dp)
@@ -129,6 +148,21 @@ fun SignUpClienteCamera(
         }
     }
 }
+
+
+
+
+
+
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewCamera() {
+    AppTheme(dynamicColor = false, darkTheme = false) {
+        SignUpClienteCameraStateHandler()
+    }
+}
+
 
 @OptIn(ExperimentalGetImage::class)
 @Composable
@@ -139,69 +173,88 @@ fun CameraPreview(
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
 
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = { ctx ->
-            val previewView = PreviewView(ctx)
-            val cameraExecutor = ContextCompat.getMainExecutor(ctx)
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { ctx ->
+                val previewView = PreviewView(ctx)
+                val cameraExecutor = ContextCompat.getMainExecutor(ctx)
 
-            cameraProviderFuture.addListener({
-                val cameraProvider = cameraProviderFuture.get()
-                val preview = androidx.camera.core.Preview.Builder().build().also {
-                    it.setSurfaceProvider(previewView.surfaceProvider)
-                }
+                cameraProviderFuture.addListener({
+                    val cameraProvider = cameraProviderFuture.get()
+                    val preview = androidx.camera.core.Preview.Builder().build().also {
+                        it.setSurfaceProvider(previewView.surfaceProvider)
+                    }
 
+                    val barcodeScanner = BarcodeScanning.getClient()
+                    val imageAnalysis = ImageAnalysis.Builder()
+                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                        .build()
 
-                val barcodeScanner = BarcodeScanning.getClient()
-                val imageAnalysis = ImageAnalysis.Builder()
-                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                    .build()
-
-                imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
-                    val mediaImage = imageProxy.image
-                    if (mediaImage != null) {
-                        val inputImage = InputImage.fromMediaImage(
-                            mediaImage,
-                            imageProxy.imageInfo.rotationDegrees
-                        )
-                        barcodeScanner.process(inputImage)
-                            .addOnSuccessListener { barcodes ->
-                                for (barcode in barcodes) {
-                                    barcode.rawValue?.let { qrCodeValue ->
-                                        onQRCodeScanned(qrCodeValue)
+                    imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
+                        val mediaImage = imageProxy.image
+                        if (mediaImage != null) {
+                            val inputImage = InputImage.fromMediaImage(
+                                mediaImage,
+                                imageProxy.imageInfo.rotationDegrees
+                            )
+                            barcodeScanner.process(inputImage)
+                                .addOnSuccessListener { barcodes ->
+                                    for (barcode in barcodes) {
+                                        barcode.rawValue?.let { qrCodeValue ->
+                                            onQRCodeScanned(qrCodeValue)
+                                        }
                                     }
                                 }
-                            }
-                            .addOnCompleteListener {
-                                imageProxy.close()
-                            }
+                                .addOnCompleteListener {
+                                    imageProxy.close()
+                                }
+                        }
                     }
-                }
 
-                val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-                try {
-                    cameraProvider.unbindAll()
-                    cameraProvider.bindToLifecycle(
-                        lifecycleOwner,
-                        cameraSelector,
-                        preview,
-                        imageAnalysis
-                    )
-                } catch (exc: Exception) {
-                    exc.printStackTrace()
-                }
-            }, cameraExecutor)
+                    try {
+                        cameraProvider.unbindAll()
+                        cameraProvider.bindToLifecycle(
+                            lifecycleOwner,
+                            cameraSelector,
+                            preview,
+                            imageAnalysis
+                        )
+                    } catch (exc: Exception) {
+                        exc.printStackTrace()
+                    }
+                }, cameraExecutor)
 
-            previewView
-        }
-    )
-}
+                previewView
+            }
+        )
 
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewForgotPassword() {
-    AppTheme(dynamicColor = false, darkTheme = false) {
-        SignUpClienteCameraStateHandler()
+        // Desenhar um quadrado na tela
+        DrawSquare()
     }
 }
+
+
+
+@Composable
+fun DrawSquare() {
+    val squareSize = 200.dp // Tamanho do quadrado
+
+    // Quadrado desenhado na tela
+    Box(
+        modifier = Modifier
+            .fillMaxSize() // Preenche toda a tela
+            .background(MaterialTheme.colorScheme.background), // Cor de fundo (opcional)
+        contentAlignment = Alignment.Center // Centraliza o conteúdo (quadrado) dentro do Box
+    ) {
+        Box(
+            modifier = Modifier
+                .size(squareSize) // Define o tamanho do quadrado
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)) // Cor do quadrado com transparência
+        )
+    }
+}
+
+
