@@ -77,7 +77,17 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle) // Lifecycle support for CameraX
     implementation(libs.androidx.camera.view) // CameraX View for PreviewView
 
-    // Adicionando ML Kit para leitura de QR Code
-    implementation(libs.google.mlkit.barcode.scanning) // ML Kit Barcode Scanning
+
+    implementation("com.google.zxing:core:3.4.1") // ZXing para geração de QR Code
+
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit
+
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0") // Conversor Gson para Retrofit
+
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0") // (Opcional) OkHttp Logging Interceptor para facilitar o debug das requisições
+
+    implementation(libs.google.mlkit.barcode.scanning) // Adicionando ML Kit para leitura de QR Code
+
 
 }

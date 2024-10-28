@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme(darkTheme = false, dynamicColor = false) {
-                MyApp() // Inicializa o aplicativo
+                MyApp()
             }
         }
     }
@@ -27,10 +27,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    val navController = rememberNavController() // Controlador de navegação
-    val context = LocalContext.current // Contexto atual para uso
+    val navController = rememberNavController()
+    val context = LocalContext.current
 
-    // Definição do NavHost com as diferentes rotas do aplicativo
+
     NavHost(navController = navController, startDestination = "splash-screen") {
 
         // SplashScreen
@@ -44,7 +44,7 @@ fun MyApp() {
         }
 
         // Nutricionista
-        composable("home-nutricionista") { /*TODO: Implementar tela inicial do nutricionista*/ }
+        composable("home-nutricionista") { NutritionistHomeScreen(navController = navController) }
         composable("login-nutricionista") {
             LoginNutricionistaStateHandler(navController = navController)
         }
