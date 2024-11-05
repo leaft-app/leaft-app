@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
@@ -44,7 +45,12 @@ fun MyApp() {
         }
 
         // Nutricionista
-        composable("home-nutricionista") { NutritionistHomeScreen(navController = navController) }
+        composable("home-nutricionista") {
+            NutritionistHomeScreen(navController = navController)
+        }
+        composable("pacientes-nutricionista") {
+            ListaPacientesScreen(navController = navController)
+        }
         composable("login-nutricionista") {
             LoginNutricionistaStateHandler(navController = navController)
         }

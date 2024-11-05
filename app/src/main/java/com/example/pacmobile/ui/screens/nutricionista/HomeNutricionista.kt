@@ -1,6 +1,5 @@
 package com.example.pacmobile.ui.screens.nutricionista
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,17 +42,23 @@ import androidx.navigation.NavController
 import com.example.pacmobile.R
 import com.example.pacmobile.ui.util.NutritionistViewModel
 
-
 @Composable
-fun NutritionistHomeScreen(viewModel: NutritionistViewModel = viewModel(), navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun NutritionistHomeScreen(
+    viewModel: NutritionistViewModel = viewModel(),
+    navController: NavController = androidx.navigation.compose.rememberNavController()
+) {
     val showQrCodeDialog = remember { mutableStateOf(false) }
-    val nutritionistId by viewModel.nutritionistId.collectAsState() // Suponha que o ID seja um Flow ou LiveData
+    val nutritionistId by viewModel.nutritionistId.collectAsState()
 
     Scaffold(
-        bottomBar = { BottomMenu {
-            showQrCodeDialog.value = true
-            Log.d("NutritionistHomeScreen", "QR Code button clicked. showQrCodeDialog set to true")
-        } }
+        bottomBar = {
+            BottomMenu(
+                onQrCodeClick = { showQrCodeDialog.value = true },
+                onPacientesClick = {
+                    navController.navigate("pacientes-nutricionista") // Navegar para a tela de pacientes
+                }
+            )
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -71,6 +76,9 @@ fun NutritionistHomeScreen(viewModel: NutritionistViewModel = viewModel(), navCo
         }
     }
 }
+
+
+
 @Composable
 fun GreetingSection() {
     Box(
@@ -178,17 +186,15 @@ fun QrCodeDialog(
     onClose: () -> Unit,
     viewModel: NutritionistViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-    // Inicia a geração do QR Code com base no ID
+
     LaunchedEffect(nutritionistId) {
         if (nutritionistId.isNotEmpty()) {
             viewModel.generateQrCode()
         }
     }
 
-    // Observa o estado do QR Code gerado
     val qrCodeBitmap by viewModel.qrCodeBitmap.collectAsState()
 
-    // Exibe o modal com o QR Code gerado
     Dialog(onDismissRequest = onClose) {
         Box(
             modifier = Modifier
@@ -201,7 +207,6 @@ fun QrCodeDialog(
                 Text("Compartilhe seu QR Code!", fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Exibe um placeholder caso o bitmap ainda esteja carregando
                 if (qrCodeBitmap != null) {
                     Image(
                         bitmap = qrCodeBitmap!!.asImageBitmap(),
@@ -221,8 +226,12 @@ fun QrCodeDialog(
     }
 }
 
+
 @Composable
-fun BottomMenu(onQrCodeClick: () -> Unit) {
+fun BottomMenu(
+    onQrCodeClick: () -> Unit,
+    onPacientesClick: () -> Unit // Ajuste: adicionando o callback de navegação para a lista de pacientes
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -250,13 +259,14 @@ fun BottomMenu(onQrCodeClick: () -> Unit) {
             )
         }
 
-        IconButton(onClick = { /* Ação do Perfil */ }) {
+        IconButton(onClick = onPacientesClick) { // Usa o callback de navegação para a lista de pacientes
             Icon(
                 painter = painterResource(id = R.drawable.vector_1_),
-                contentDescription = "Perfil",
+                contentDescription = "Pacientes",
                 tint = Color.Unspecified,
                 modifier = Modifier.size(24.dp)
             )
         }
     }
 }
+
