@@ -1,10 +1,11 @@
-package com.example.pacmobile.ui.util
+package com.example.pacmobile.ui.presentation.viewmodel
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pacmobile.ui.util.ApiService
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.flow.MutableStateFlow

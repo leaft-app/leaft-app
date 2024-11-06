@@ -40,7 +40,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.util.NutritionistViewModel
+import com.example.pacmobile.ui.presentation.viewmodel.NutritionistViewModel
 
 @Composable
 fun NutritionistHomeScreen(
