@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    // Firebase
+    id("com.google.gms.google-services")
 }
+
 
 
 android {
@@ -85,9 +89,13 @@ dependencies {
 
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0") // Conversor Gson para Retrofit
 
+    //noinspection UseTomlInstead
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0") // (Opcional) OkHttp Logging Interceptor para facilitar o debug das requisições
 
     implementation(libs.google.mlkit.barcode.scanning) // Adicionando ML Kit para leitura de QR Code
 
-
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.storage)
 }
