@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens.nutricionista
+package com.example.pacmobile.ui.presentation.screens.cliente
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,27 +29,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.CustomButton
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 import com.example.pacmobile.ui.utils.CodeInputField
 
 @Composable
-fun CodigoRecuperacaoStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun CodigoRecuperacaoClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val codigoState = remember { mutableStateOf("") }
 
-    CodigoRecuperacao(
+    CodigoRecuperacaoCliente(
         codigo = codigoState.value,
         onCodigoChange = { codigoState.value = it },
         onEnviarClick = {
-            navController.navigate("nova-senha-nutricionista") {
-                popUpTo("codigo-recuperacao-nutricionista") { inclusive = true }
+            navController.navigate("nova-senha-cliente") {
+                popUpTo("codigo-recuperação-cliente") { inclusive = true }
             }
         },
     )
 }
 
 @Composable
-fun CodigoRecuperacao(
+fun CodigoRecuperacaoCliente(
     codigo: String,
     onCodigoChange: (String) -> Unit,
     onEnviarClick: () -> Unit,
@@ -112,7 +112,7 @@ fun CodigoRecuperacao(
 @Composable
 fun PreviewCodigoRecuperacao() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        CodigoRecuperacaoStateHandler()
+        CodigoRecuperacaoClienteStateHandler()
     }
 }
 

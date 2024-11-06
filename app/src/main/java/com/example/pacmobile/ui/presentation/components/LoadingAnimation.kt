@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.components
+package com.example.pacmobile.ui.presentation.components
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing

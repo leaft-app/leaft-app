@@ -1,11 +1,10 @@
-package com.example.pacmobile.ui.screens.cliente
+package com.example.pacmobile.ui.presentation.screens.cliente
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,46 +20,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.components.CustomTextField
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.CustomButton
+import com.example.pacmobile.ui.presentation.components.CustomTextField
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 @Composable
-fun LoginClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+fun SignUpClienteStateHandler(
+    navController: NavController = androidx.navigation.compose.rememberNavController(),
+    nutricionistaId: String = ""
+) {
+    val nameState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
-    LoginCliente(
+    SignUpCliente(
+        name = nameState.value,
+        onNameChange = { nameState.value = it },
         email = emailState.value,
         onEmailChange = { emailState.value = it },
         password = passwordState.value,
         onPasswordChange = { passwordState.value = it },
-        onLoginClick = {
-            navController.navigate("home-cliente") {
-                popUpTo("login-cliente") { inclusive = true }
-            }
-        },
-        onForgotPasswordClick = {
-            navController.navigate("forgot-password-cliente") {
-                popUpTo("login-cliente") { inclusive = true }
-            }
-        },
         onSignUpClick = {
-            navController.navigate("sign-up-camera-cliente") {
-                popUpTo("login-cliente") { inclusive = true }
+            // Aqui você faz a chamada para o backend passando o clienteNome, clienteSenha e o nutricionistaId
+            // Exemplo:
+            // api.cadastrarCliente(nome = clienteNome, senha = clienteSenha, nutricionistaId = nutricionistaId)
+
+
+            
+            navController.navigate("home-cliente") {
+                popUpTo("sign-up-cliente") { inclusive = true }
             }
         }
     )
 }
 
 @Composable
-fun LoginCliente(
+fun SignUpCliente(
+    name: String,
+    onNameChange: (String) -> Unit,
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -86,12 +87,19 @@ fun LoginCliente(
                 .size(177.dp, 198.dp)
         )
 
-        // Texto "Faça seu login"
+        // Texto "Faça seu Cadastro"
         Text(
-            text = "Faça seu login",
+            text = "Faça seu Cadastro",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 102.dp),
-            fontSize = 24.sp
+            modifier = Modifier.padding(bottom = 24.dp),
+            fontSize = 26.sp
+        )
+
+        // Campo de Nome
+        CustomTextField(
+            label = "Nome",
+            value = name,
+            onValueChange = onNameChange
         )
 
         // Campo de E-mail
@@ -109,35 +117,23 @@ fun LoginCliente(
             isPassword = true
         )
 
-        // Botão "Entrar"
-        CustomButton(
-            text = "Entrar",
-            onClick = onLoginClick,
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Texto "Esqueci minha senha"
-        TextButton(
-            onClick = onForgotPasswordClick,
+        // Botão "Cadastrar"
+        CustomButton(
+            text = "Cadastrar",
+            onClick = onSignUpClick,
             modifier = Modifier
                 .fillMaxWidth()
-        ) {
-            Text(text = "Esqueci minha senha >", color = MaterialTheme.colorScheme.primary)
-        }
-
-        // Texto "Não tenho conta"
-        TextButton(
-            onClick = onSignUpClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Não tenho conta >", color = MaterialTheme.colorScheme.primary)
-        }
+                .height(48.dp)
+        )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewLogin() {
+fun PreviewSignUp() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        LoginClienteStateHandler()
+        SignUpClienteStateHandler()
     }
 }

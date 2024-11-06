@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens.cliente
+package com.example.pacmobile.ui.presentation.screens.cliente
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,30 +25,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.components.CustomTextField
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.CustomButton
+import com.example.pacmobile.ui.presentation.components.CustomTextField
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 @Composable
-fun EsqueceuSenhaClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
-    val emailState = remember { mutableStateOf("") }
+fun NovaSenhaClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+    val senhaState = remember { mutableStateOf("") }
 
-    EsqueceuSenhaCliente(
-        email = emailState.value,
-        onEmailChange = { emailState.value = it },
-        onLoginClick = {
-            navController.navigate("codigo-recuperação-cliente") {
-                popUpTo("forgot-password-cliente") { inclusive = true }
+    NovaSenhaCliente(
+        senha = senhaState.value,
+        onSenhaChange = { senhaState.value = it },
+        onEnviarClick = {
+            // Navegação para a próxima tela
+            navController.navigate("login-cliente") {
+                popUpTo("nova-senha-cliente") { inclusive = true }
             }
         },
     )
 }
 
 @Composable
-fun EsqueceuSenhaCliente(
-    email: String,
-    onEmailChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
+fun NovaSenhaCliente(
+    senha: String,
+    onSenhaChange: (String) -> Unit,
+    onEnviarClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -65,7 +66,7 @@ fun EsqueceuSenhaCliente(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.icon),
+            painter = painterResource(id = R.drawable.icon), // Mantenha o ícone
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -73,17 +74,17 @@ fun EsqueceuSenhaCliente(
                 .size(177.dp, 198.dp)
         )
 
-        // Texto "Esqueceu sua senha?"
+        // Título "Insira sua nova senha"
         Text(
-            text = "Esqueceu sua senha?",
+            text = "Nova Senha",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 102.dp),
+            modifier = Modifier.padding(bottom = 32.dp),
             fontSize = 24.sp
         )
 
-        //Texto "Digite seu e-mail cadastrado"
+        // Texto "Insira sua senha"
         Text(
-            text = "Digite seu e-mail cadastrado",
+            text = "Insira sua senha",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier
                 .padding(bottom = 32.dp)
@@ -91,25 +92,26 @@ fun EsqueceuSenhaCliente(
             fontSize = 16.sp,
         )
 
-        // Campo de E-mail
+        // Campo de Senha
         CustomTextField(
-            label = "E-mail",
-            value = email,
-            onValueChange = onEmailChange
+            label = "Senha",
+            value = senha,
+            onValueChange = onSenhaChange,
+            isPassword = true
         )
 
-        // Botão "Entrar"
+        // Botão "Enviar"
         CustomButton(
-            text = "Entrar",
-            onClick = onLoginClick,
+            text = "Enviar",
+            onClick = onEnviarClick,
         )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewEsqueceuSenhaCliente() {
+fun PreviewNovaSenha() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        EsqueceuSenhaClienteStateHandler()
+        NovaSenhaClienteStateHandler()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens.nutricionista
+package com.example.pacmobile.ui.presentation.screens.nutricionista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

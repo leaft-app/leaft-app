@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.components
+package com.example.pacmobile.ui.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size

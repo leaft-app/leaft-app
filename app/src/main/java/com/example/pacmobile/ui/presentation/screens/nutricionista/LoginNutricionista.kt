@@ -1,10 +1,11 @@
-package com.example.pacmobile.ui.screens.nutricionista
+package com.example.pacmobile.ui.presentation.screens.nutricionista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,40 +21,49 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.components.CustomTextField
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.CustomButton
+import com.example.pacmobile.ui.presentation.components.CustomTextField
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 @Composable
-fun SignUpNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
-    val nameState = remember { mutableStateOf("") }
+fun LoginNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
-    SignUpNutricionista(
-        name = nameState.value,
-        onNameChange = { nameState.value = it },
+    LoginNutricionista(
         email = emailState.value,
         onEmailChange = { emailState.value = it },
         password = passwordState.value,
         onPasswordChange = { passwordState.value = it },
+        onLoginClick = {
+            // Ação ao clicar em "Entrar" (navegar para a próxima tela)
+            navController.navigate("home-nutricionista") {
+                popUpTo("login-nutricionista") { inclusive = true }
+            }
+        },
+        onForgotPasswordClick = {
+            // Navegar para a tela de recuperação de senha
+            navController.navigate("forgot-password-nutricionista") {
+                popUpTo("login-nutricionista") { inclusive = true }
+            }
+        },
         onSignUpClick = {
-            // Ação ao clicar em "Cadastrar" (navegar para a próxima tela)
-            navController.navigate("login-nutricionista") {
-                popUpTo("sign-up-nutricionista") { inclusive = true }
+            // Navegar para a tela de registro
+            navController.navigate("sign-up-nutricionista") {
+                popUpTo("login-nutricionista") { inclusive = true }
             }
         }
     )
 }
 
 @Composable
-fun SignUpNutricionista(
-    name: String,
-    onNameChange: (String) -> Unit,
+fun LoginNutricionista(
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
+    onForgotPasswordClick: () -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -79,19 +89,12 @@ fun SignUpNutricionista(
                 .size(177.dp, 198.dp)
         )
 
-        // Texto "Faça seu Cadastro"
+        // Texto "Faça seu login"
         Text(
-            text = "Faça seu Cadastro",
+            text = "Faça seu login",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(bottom = 24.dp),
-            fontSize = 26.sp
-        )
-
-        // Campo de Nome
-        CustomTextField(
-            label = "Nome",
-            value = name,
-            onValueChange = onNameChange
+            modifier = Modifier.padding(bottom = 102.dp),
+            fontSize = 24.sp
         )
 
         // Campo de E-mail
@@ -109,23 +112,35 @@ fun SignUpNutricionista(
             isPassword = true
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Botão "Cadastrar"
+        // Botão "Entrar"
         CustomButton(
-            text = "Cadastrar",
-            onClick = onSignUpClick,
+            text = "Entrar",
+            onClick = onLoginClick,
+        )
+
+        // Texto "Esqueci minha senha"
+        TextButton(
+            onClick = onForgotPasswordClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
-        )
+        ) {
+            Text(text = "Esqueci minha senha >", color = MaterialTheme.colorScheme.primary)
+        }
+
+        // Texto "Não tenho conta"
+        TextButton(
+            onClick = onSignUpClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Não tenho conta >", color = MaterialTheme.colorScheme.primary)
+        }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewSignUp() {
+fun PreviewLogin() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        SignUpNutricionistaStateHandler()
+        LoginNutricionistaStateHandler()
     }
 }

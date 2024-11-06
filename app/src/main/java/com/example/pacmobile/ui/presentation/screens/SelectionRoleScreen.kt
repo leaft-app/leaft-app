@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens
+package com.example.pacmobile.ui.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 @Composable
 fun SelectionRoleScreen(navController: NavController, modifier: Modifier = Modifier) {

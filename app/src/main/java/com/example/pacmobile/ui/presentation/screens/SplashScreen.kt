@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens
+package com.example.pacmobile.ui.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.LoadingAnimation
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.LoadingAnimation
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 import kotlinx.coroutines.delay
 
 

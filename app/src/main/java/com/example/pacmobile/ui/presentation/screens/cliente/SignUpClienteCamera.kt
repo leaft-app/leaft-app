@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens.cliente
+package com.example.pacmobile.ui.presentation.screens.cliente
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -35,8 +35,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.CustomButton
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 

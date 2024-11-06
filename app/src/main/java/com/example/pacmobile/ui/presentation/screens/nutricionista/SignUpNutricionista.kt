@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.screens.cliente
+package com.example.pacmobile.ui.presentation.screens.nutricionista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,15 +25,12 @@ import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
 
 @Composable
-fun SignUpClienteStateHandler(
-    navController: NavController = androidx.navigation.compose.rememberNavController(),
-    nutricionistaId: String = ""
-) {
+fun SignUpNutricionistaStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
     val nameState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
 
-    SignUpCliente(
+    SignUpNutricionista(
         name = nameState.value,
         onNameChange = { nameState.value = it },
         email = emailState.value,
@@ -41,21 +38,16 @@ fun SignUpClienteStateHandler(
         password = passwordState.value,
         onPasswordChange = { passwordState.value = it },
         onSignUpClick = {
-            // Aqui você faz a chamada para o backend passando o clienteNome, clienteSenha e o nutricionistaId
-            // Exemplo:
-            // api.cadastrarCliente(nome = clienteNome, senha = clienteSenha, nutricionistaId = nutricionistaId)
-
-
-            
-            navController.navigate("home-cliente") {
-                popUpTo("sign-up-cliente") { inclusive = true }
+            // Ação ao clicar em "Cadastrar" (navegar para a próxima tela)
+            navController.navigate("login-nutricionista") {
+                popUpTo("sign-up-nutricionista") { inclusive = true }
             }
         }
     )
 }
 
 @Composable
-fun SignUpCliente(
+fun SignUpNutricionista(
     name: String,
     onNameChange: (String) -> Unit,
     email: String,
@@ -134,6 +126,6 @@ fun SignUpCliente(
 @Composable
 fun PreviewSignUp() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        SignUpClienteStateHandler()
+        SignUpNutricionistaStateHandler()
     }
 }

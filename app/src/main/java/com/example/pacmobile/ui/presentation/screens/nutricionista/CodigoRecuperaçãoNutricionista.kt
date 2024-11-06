@@ -1,11 +1,15 @@
-package com.example.pacmobile.ui.screens.cliente
+package com.example.pacmobile.ui.presentation.screens.nutricionista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -26,29 +30,28 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
 import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.components.CustomTextField
 import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.utils.CodeInputField
 
 @Composable
-fun NovaSenhaClienteStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
-    val senhaState = remember { mutableStateOf("") }
+fun CodigoRecuperacaoStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
+    val codigoState = remember { mutableStateOf("") }
 
-    NovaSenhaCliente(
-        senha = senhaState.value,
-        onSenhaChange = { senhaState.value = it },
+    CodigoRecuperacao(
+        codigo = codigoState.value,
+        onCodigoChange = { codigoState.value = it },
         onEnviarClick = {
-            // Navegação para a próxima tela
-            navController.navigate("login-cliente") {
-                popUpTo("nova-senha-cliente") { inclusive = true }
+            navController.navigate("nova-senha-nutricionista") {
+                popUpTo("codigo-recuperacao-nutricionista") { inclusive = true }
             }
         },
     )
 }
 
 @Composable
-fun NovaSenhaCliente(
-    senha: String,
-    onSenhaChange: (String) -> Unit,
+fun CodigoRecuperacao(
+    codigo: String,
+    onCodigoChange: (String) -> Unit,
     onEnviarClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -66,7 +69,7 @@ fun NovaSenhaCliente(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.icon), // Mantenha o ícone
+            painter = painterResource(id = R.drawable.icon),
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -74,31 +77,28 @@ fun NovaSenhaCliente(
                 .size(177.dp, 198.dp)
         )
 
-        // Título "Insira sua nova senha"
         Text(
-            text = "Nova Senha",
+            text = "Insira o código enviado para seu email",
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(bottom = 32.dp),
             fontSize = 24.sp
         )
 
-        // Texto "Insira sua senha"
-        Text(
-            text = "Insira sua senha",
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .align(Alignment.Start),
-            fontSize = 16.sp,
-        )
+        // Digitação do código de recuperação
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
+        ) {
+            repeat(4) { position ->
+                CodeInputField(
+                    codigo = codigo,
+                    position = position,
+                    onCodigoChange = onCodigoChange
+                )
+            }
+        }
 
-        // Campo de Senha
-        CustomTextField(
-            label = "Senha",
-            value = senha,
-            onValueChange = onSenhaChange,
-            isPassword = true
-        )
+        Spacer(modifier = Modifier.height(32.dp))
 
         // Botão "Enviar"
         CustomButton(
@@ -110,8 +110,9 @@ fun NovaSenhaCliente(
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewNovaSenha() {
+fun PreviewCodigoRecuperacao() {
     AppTheme(dynamicColor = false, darkTheme = false) {
-        NovaSenhaClienteStateHandler()
+        CodigoRecuperacaoStateHandler()
     }
 }
+

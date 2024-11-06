@@ -1,4 +1,4 @@
-package com.example.pacmobile.ui.theme
+package com.example.pacmobile.ui.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily

@@ -8,11 +8,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pacmobile.ui.screens.SelectionRoleScreen
-import com.example.pacmobile.ui.screens.SplashScreen
-import com.example.pacmobile.ui.screens.cliente.*
-import com.example.pacmobile.ui.screens.nutricionista.*
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.screens.SelectionRoleScreen
+import com.example.pacmobile.ui.presentation.screens.SplashScreen
+import com.example.pacmobile.ui.presentation.screens.cliente.*
+import com.example.pacmobile.ui.presentation.screens.nutricionista.*
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
