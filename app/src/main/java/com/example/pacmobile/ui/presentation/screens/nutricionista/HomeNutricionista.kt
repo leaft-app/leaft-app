@@ -48,7 +48,7 @@ fun NutritionistHomeScreen(
     navController: NavController = androidx.navigation.compose.rememberNavController()
 ) {
     val showQrCodeDialog = remember { mutableStateOf(false) }
-    val nutritionistId by viewModel.nutritionistId.collectAsState()
+    val nutritionistId by viewModel.currentUser.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -71,7 +71,7 @@ fun NutritionistHomeScreen(
             RecentActivitiesSection()
 
             if (showQrCodeDialog.value) {
-                QrCodeDialog(nutritionistId = nutritionistId ?: "", onClose = { showQrCodeDialog.value = false })
+                QrCodeDialog(nutritionistId = nutritionistId.toString() ?: "", onClose = { showQrCodeDialog.value = false })
             }
         }
     }
@@ -189,7 +189,7 @@ fun QrCodeDialog(
 
     LaunchedEffect(nutritionistId) {
         if (nutritionistId.isNotEmpty()) {
-            viewModel.generateQrCode()
+            viewModel.qrCodeBitmap
         }
     }
 

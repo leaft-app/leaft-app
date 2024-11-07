@@ -1,4 +1,7 @@
-package com.example.pacmobile.domain.models
+package com.example.pacmobile.data.model
 
-class Nutricionist {
-}
+data class Nutritionist(
+    val id: String = "",
+    val name: String = "",
+    val email: String = ""
+)

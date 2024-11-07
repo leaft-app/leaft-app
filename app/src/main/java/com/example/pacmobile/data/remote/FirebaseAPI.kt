@@ -1,4 +1,13 @@
 package com.example.pacmobile.data.remote
 
-class FirebaseAPI {
+import com.google.firebase.firestore.FirebaseFirestore
+
+object FirebaseAPI {
+    private val firestoreInstance: FirebaseFirestore by lazy {
+        FirebaseFirestore.getInstance()
+    }
+
+    fun getFirestoreInstance(): FirebaseFirestore {
+        return firestoreInstance
+    }
 }

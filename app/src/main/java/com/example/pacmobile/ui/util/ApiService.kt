@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ApiService {
-    @GET("qrcode/{id}")
+
+    @GET("generateQrCode/{id}")
     suspend fun generateQrCode(@Path("id") id: String): Response<ResponseBody>
 }
