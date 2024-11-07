@@ -13,7 +13,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.pacmobile"
+        applicationId = "leaft.app"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

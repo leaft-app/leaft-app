@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 data class Paciente(val nome: String, val email: String)
 

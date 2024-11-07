@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pacmobile.R
-import com.example.pacmobile.ui.components.CustomButton
-import com.example.pacmobile.ui.components.CustomTextField
-import com.example.pacmobile.ui.theme.AppTheme
+import com.example.pacmobile.ui.presentation.components.CustomButton
+import com.example.pacmobile.ui.presentation.components.CustomTextField
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 
 @Composable
 fun ForgotPasswordStateHandler(navController: NavController = androidx.navigation.compose.rememberNavController()) {
