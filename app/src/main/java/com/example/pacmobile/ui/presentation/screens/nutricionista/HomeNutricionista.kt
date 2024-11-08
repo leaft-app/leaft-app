@@ -34,12 +34,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pacmobile.R
+import com.example.pacmobile.ui.presentation.screens.cliente.ClientHomeScreen
+import com.example.pacmobile.ui.presentation.theme.AppTheme
 import com.example.pacmobile.ui.presentation.viewmodel.NutritionistViewModel
 
 @Composable
@@ -269,4 +272,3 @@ fun BottomMenu(
         }
     }
 }
-

@@ -7,7 +7,7 @@ object FirebaseAPI {
         FirebaseFirestore.getInstance()
     }
 
-    fun getFirestoreInstance(): FirebaseFirestore {
+    fun retrieveFirestoreInstance(): FirebaseFirestore {
         return firestoreInstance
     }
 }

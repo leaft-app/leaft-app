@@ -68,7 +68,9 @@ fun MyApp() {
         }
 
         // Cliente
-        composable("home-cliente") { /*TODO: Implementar tela inicial do cliente*/ }
+        composable("home-cliente") {
+            ClientHomeScreen(navController = navController)
+        }
         composable("login-cliente") {
             LoginClienteStateHandler(navController = navController)
         }
