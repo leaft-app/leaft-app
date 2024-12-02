@@ -56,6 +56,8 @@ android {
 
 dependencies {
 
+    implementation(libs.coil.compose) // coil para carregamento de imagens
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

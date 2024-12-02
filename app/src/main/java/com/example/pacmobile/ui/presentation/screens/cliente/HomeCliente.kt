@@ -139,8 +139,6 @@ fun ClientBottomMenu(
     }
 }
 
-
-
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewClientHomeScreen() {
