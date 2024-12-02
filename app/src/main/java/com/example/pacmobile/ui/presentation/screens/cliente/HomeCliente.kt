@@ -30,7 +30,7 @@ fun ClientHomeScreen(navController: NavController = androidx.navigation.compose.
     Scaffold(
         bottomBar = {
             ClientBottomMenu(
-                onAddMealClick = { /* Ação para adicionar refeição */ },
+                onAddMealClick = { navController.navigate("add-refeicao") },
                 onMessagesClick = { navController.navigate("chat-cliente") }
             )
         }

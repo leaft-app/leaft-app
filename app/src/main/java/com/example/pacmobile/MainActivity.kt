@@ -92,5 +92,13 @@ fun MyApp() {
         composable("nova-senha-cliente") {
             NovaSenhaClienteStateHandler(navController = navController)
         }
+
+        composable("chat-cliente") {
+            ChatClienteHandler(navController = navController)
+        }
+
+        composable("add-refeicao") {
+            RefeicaoClienteHandler(navController = navController)
+        }
     }
 }
