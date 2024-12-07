@@ -178,7 +178,7 @@ Essa ferramenta combina:
 **Passo 1:** Certifique-se de que o dispositivo está conectado via cabo USB ao computador.
   - 🔌 Utilize um cabo USB funcional e, se possível, o original do dispositivo.
   - 🖥️ O modo de conexão deve estar configurado como **Transferência de Arquivos (MTP)**.
-  - 
+    
 **Passo 2:** Após instalar o APK (com o comando `adb install` ou copiando manualmente o arquivo para o dispositivo):
   - 📂 Caso tenha copiado o APK manualmente, abra o **Gerenciador de Arquivos** no dispositivo e localize o APK copiado.
   - ➡️ Toque no arquivo para instalar. Se necessário, ative a permissão de instalação de fontes desconhecidas em **Configurações > Segurança > Permitir Instalação de Apps Desconhecidos**.
@@ -189,3 +189,89 @@ Essa ferramenta combina:
 - **Passo 4:** No dispositivo, localize o aplicativo instalado na tela inicial ou no menu de aplicativos.
   - 🔎 Procure pelo ícone com o nome **Leaft App**.
   - 🎉 Toque no ícone para abrir o aplicativo e verificar se ele está funcionando corretamente.
+
+ ---
+
+ ## 📸 Capturas de Tela do Aplicativo
+
+### 1️⃣ **Tela Inicial**
+![01_TELA_INICIAL](https://github.com/user-attachments/assets/5005b654-9586-4bbe-acb8-a562ee48afb3)
+
+- ✨ A tela inicial do aplicativo permite que o usuário escolha se deseja entrar como **Nutricionista** ou **Cliente**.
+- ➡️ Após escolher o perfil, o usuário é direcionado para a tela de login.
+
+---
+
+### 2️⃣ **Tela Home do Nutricionista**
+![02_TELA_NUTRI_GERA_QR_CADASTRAR_PACIENTE](https://github.com/user-attachments/assets/1d50eb2d-9b5c-4714-bd3f-ecc296960b4b)
+
+- 🏠 Esta é a tela inicial do profissional nutricionista, com uma visão geral das atividades de seus pacientes/clientes.
+- 🟢 Inclui a funcionalidade de gerar um **Código QR**:
+  - 🔗 O código QR permite que o cliente/paciente se cadastre diretamente com seu nutricionista através de uma chave única e intransferível.
+
+---
+
+### 3️⃣ **Relação de Pacientes do Nutricionista**
+![06_TELA_NUTRI_RELACAO_PACIENTE](https://github.com/user-attachments/assets/99503e9b-7988-4151-8ee5-fb0dd4348790)
+
+- 📋 Tela onde o nutricionista tem acesso à **lista completa de seus pacientes/clientes**.
+- 🔍 Facilita a organização e o acompanhamento individual de cada paciente.
+
+---
+
+### 4️⃣ **Recuperação de Senha**
+![03_TELA_COD_VERIFICACAO_PARA_ALTERAR_SENHA](https://github.com/user-attachments/assets/36e00aa4-a5b4-4742-a0e7-5fb6d6b13bb4)
+
+- ❓ Caso um usuário esqueça sua senha:
+  - 📧 Um código de verificação é enviado para o e-mail cadastrado.
+  - 🔑 Após validar o código, o usuário pode criar uma **nova senha** para acesso.
+
+---
+
+### 5️⃣ **Tela de Cadastro do Cliente com QR Code**
+![04_TELA_CLIENTE_LER_QR_GERADO_PELO_NUTRI](https://github.com/user-attachments/assets/44d3d564-03e6-425e-b52e-41525260ef5a)
+
+- 👤 Tela onde o cliente pode se cadastrar ao escanear o **QR Code gerado pelo nutricionista**.
+- 📷 Ao tocar em "Entrar", a câmera do dispositivo é ativada para realizar a leitura do código.
+
+---
+
+### 6️⃣ **Tela de Refeições do Cliente**
+![05_TELA_REFEICOES_CLIENTE](https://github.com/user-attachments/assets/3bb61f88-cf88-4bc3-b971-1cfc4b14fb1c)
+
+- 🍽️ Nesta tela, o cliente pode visualizar as refeições submetidas ao nutricionista.
+- 📊 As informações organizadas ajudam no acompanhamento do plano alimentar proposto.
+
+---
+
+### 7️⃣ **Troca de Mensagens entre Paciente e Nutricionista**
+![07_TELA_MENSAGEM_PACIENTE_NUTRI](https://github.com/user-attachments/assets/de2f8c7e-147d-4d01-8d69-ffbbd652e25f)
+
+- 💬 Tela dedicada à comunicação direta entre o paciente/cliente e seu nutricionista.
+- 📢 Permite uma troca de mensagens clara e rápida, otimizando o acompanhamento e tirando dúvidas em tempo real.
+
+---
+
+### 8️⃣ **Demonstração de Navegação**
+
+Exemplo de navegação, versão 2.1.
+https://github.com/user-attachments/assets/0a884b1d-a98a-4dbf-ae99-b53f812e162c
+
+---
+
+## 🌟 Resumo
+As telas apresentadas mostram o fluxo de uso do **LEAFT**, destacando:
+- A **facilidade de navegação** para nutricionistas e clientes.
+- Funcionalidades que promovem a **conexão prática e eficiente** entre os dois perfis.
+- Soluções tecnológicas voltadas ao **engajamento do paciente** e à **eficiência do profissional**.
+
+---
+
+### 🧑‍💻 **Equipe de Desenvolvimento**
+
+O projeto **LEAFT** foi desenvolvido com dedicação e colaboração pela seguinte equipe:
+
+- 👨‍💻 **Hélio Costa**
+- 👨‍💻 **Isaac Graper**
+- 👨‍💻 **Vinícius Zanatta**
+
